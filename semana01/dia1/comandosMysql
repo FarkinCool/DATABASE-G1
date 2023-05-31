@@ -1,0 +1,39 @@
+// acceder a mysql
+sudo mysql -h localhost -u root -p
+
+//mostrar las base de datos
+show databases;
+
+//crear una base de datos nueva con el nombre cursos
+create database cursos;
+
+//ingresar a la base datos creada 
+use cursos;
+
+//crear una tabla en la bd cursos
+create table alumno(
+    -> nombre varchar(100) not null,
+    -> email varchar(200) 
+    -> );
+
+//ver la descripcion de la tabla creada
+desc alumno;
+
+//insertar un dato en la tabla alumno
+insert into alumno values('farkin coquil', 'farkin.coquil.olivera@gmail.com');
+
+//mostrar los datos creados en una tabla
+select * from alumno;
+
+//insertar varios datos  en una tabla
+insert into alumno values
+    -> ('jorge perez','jorge@gmail.com'),
+    -> ('ana lopez','ana@gmail.com'),
+    -> ('luis delgado','luis@gmail.com');
+
+//---- para guardar en git y subir los cambios en la nube---
+git add .
+git commit -m "dia1" 
+git push origin main
+
+
