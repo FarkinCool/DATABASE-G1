@@ -36,4 +36,28 @@ git add .
 git commit -m "dia1" 
 git push origin main
 
+//--ingresar de nuevo para agregar desde un archivo csv
+sudo mysql -h localhost -u root -p
+use cursos
+//verificamos local infile y la colocamos como true
+show global variables like 'local_infile';
+set global local_infile=true;
+//salimos y volemos a entrar ala bd de la sigueinte manera y aghregamos el archivo csv
+sudo mysql --local_infile=1 -h localhost -u root -p
+use cursos;
+load data local infile '/home/farkin/Repositorio/DATABASE-G1/semana01/dia1/alumnos.csv' into table alumno;
+
+//podemos deliminetar ojo por probar
+load data infile '/home/farkin/Repositorio/DATABASE-G1/semana01/dia1/alumnos.csv'
+into table alumno
+fields terminated by ','
+ //----enclosed by '"'
+lines terminated by '\n';
+// ---- ignore 1 rows;
+
+
+
+
+
+
 

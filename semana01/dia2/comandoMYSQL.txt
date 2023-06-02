@@ -1,0 +1,94 @@
+//-- mostrar todos los datos de la tabla alumnos
+select  * from alumnos;
+// -- mostrar uno o varios campos especificos
+select nombre, apellidos from alumnos;
+
+//-- concatena las atributos mencionandos y les coloca un alias
+select CONCAT(nombre, '',apellidos) as nombre_completo from alumnos;
+
+//-- muestra la maxima nota de la lista de alumnos
+select max(nota) from alumnos;
+
+//-- muestra la minima nota de la lista de alumnos
+select min(nota) from alumnos;
+
+//-- muestra el promedio de  notas de la lista de alumnos
+select avg(nota) from alumnos; 
+
+//-- muestra la minima, maxima y promedio de notas de la lista de alumnos
+select  min(nota), max(nota), avg(nota) from alumnos; 
+
+//-- muestra los paises de la lista alumnos sin repetir algunoç
+select distinct pais from alumnos; 
+
+//-- muestra todos los campos de la tabla alumno que pertenezcan o sean de Peru, distincion de mayusculas y tildes
+select * from alumnos where pais = 'Peru';
+
+// -- muestra todos los alumnos aprobados o q tengan notas mayores a 10
+select * from alumnos where nota > 10;
+
+//--  muestra la cantidad de personas aprobadas
+select count(*) from alumnos where nota > 10;
+
+//--  muestra la cantidad de personas aprobadas y que sean de peru
+select count(*) from alumnos where nota > 10 and pais = 'Peru' ;
+
+//-- muestra la cantidad de alumnos que tengan notas entre 11 y 15 - filtro con rango 
+select count(*) from alumnos where nota  between  11 and 15 ;
+
+//-- muestra todos los atributos de la tabla alumnos donde nombre empieza con la letra A - % es un comodin
+select  * from alumnos  where nombre like 'A%';
+
+//- -- muestra todos los atributos de la tabla alumnos donde nombre empieza con la letra A pero con expresion regular ^
+select * from alumnos where nombre regexp '^A';
+
+//-- muestras pais y la cantidad agrupados por pais en forma descendente  - agrupacion por pais 
+select  pais, count(*) as total from alumnos group by pais order by count(*)  desc;
+
+//--   quiero saber todos los paises que tieen mas de 10 de alumnos en total por pais en forma descendete - agrupacion con filtro
+select  pais, count(*) as total from alumnos group by pais having count(*) > 10 order by count(*)  desc; 
+
+//-- mostrar el promedio de nota de alumnos por pais ordenado de mayor a menor 
+select pais, avg(nota)  as promedio from alumnos  group by pais order by promedio desc; 
+
+//-- mostrar el numero de alumnos por pais que aprobaron el curso considerenado que la aprobatoria es mayor a 13
+select pais,count(*) as cantidad  from alumnos where nota > 13  group by pais;
+
+//-- mostrar los alumnos de peru cuya nota es mayor al promedio de la nota total del pais
+select concat(nombre,' ', apellidos) as alumno, nota from alumnos where pais = 'Peru' and nota > (select  avg(nota) from alumnos where pais = 'Peru');
+
+//-- subconsultas en columnas y fiultros 
+select nombre,nota,(select avg(nota) from alumnos where pais = 'Peru') as promedio, (nota - (select avg(nota) from alumnos where pais = 'Peru')) as diferencia from alumnos where pais = 'Peru' and nota > (select  avg(nota) from alumnos where pais = 'Peru');
+
+//-- subconsultas copn group by--- ( pais = pais // el primer pais representa al pais q esta en esa consulta y el segundo pais a la consulta de afuera
+select pais, count(id) as total from alumnos where nota > (select  avg(alu_avg.nota) from alumnos alu_avg where alu_avg.pais = pais) group by pais order by total desc;
+
+/// -- insert
+insert into alumnos(nombre, apellidos, email,pais,nota) values ('Cesar','Mayta','cesarmaytya2gmail.com', 'Peru',20 );
+
+//---update
+update alumnos set id=1001 where email = 'cesarmaytya2gmail.com'
+
+insert into alumnos (nombre,apellidos,email,pais,nota) values 
+('Jose', 'Luna', 'jose@hotmail.com','Peru',15 ),
+('Claudia', 'martines', 'jose@hotmail.com','Peru',11 ),
+('Raul', 'soto', 'jose@hotmail.com','Peru',12 );
+
+update  alumnos set id = 1002 where pais ='Peru' and nombre='Jose';
+
+update  alumnos set id = 1003 where pais ='Peru' and nombre='Claudia';
+
+update  alumnos set id = 1004 where pais ='Peru' and nombre='Raul';
+
+//eliminar 
+delete from alumnos where id=1004;
+
+//elminar completamente y dejar limpio
+truncate table alumnos; 
+
+
+
+
+
+
+
